@@ -112,7 +112,6 @@ class MovieDetailSchema(MovieOut):
     pass
 
 
-
 MovieListResponseSchema = MovieListResponse
 MovieDetailSchema = MovieOut
 
@@ -125,4 +124,3 @@ CountrySchema = CountryOut
 GenreSchema = GenreOut
 ActorSchema = ActorOut
 LanguageSchema = LanguageOut
-
