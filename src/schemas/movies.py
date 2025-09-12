@@ -124,3 +124,5 @@ CountrySchema = CountryOut
 GenreSchema = GenreOut
 ActorSchema = ActorOut
 LanguageSchema = LanguageOut
+
+#before change MovieDetailSchema
