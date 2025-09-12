@@ -143,13 +143,9 @@ class MovieDetailSchema(MovieOut):
 
 
 MovieListResponseSchema = MovieListResponse
-#MovieDetailSchema = MovieOut
-
 MovieCreateSchema = MovieCreate
 MovieUpdateSchema = MovieUpdate
-
 MovieListItemSchema = MovieListItem
-
 CountrySchema = CountryOut
 GenreSchema = GenreOut
 ActorSchema = ActorOut
