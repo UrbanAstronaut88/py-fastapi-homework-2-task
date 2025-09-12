@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import timedelta, date
 from typing import List, Optional
 from pydantic import BaseModel, Field, ConfigDict, field_validator
 from src.database.models import MovieStatusEnum
@@ -50,7 +50,7 @@ class MovieBase(BaseModel):
 
     @field_validator("date")
     def validate_date(cls, value):
-        max_date = date(date.today().year + 1, 12, 31)
+        max_date = date.today() + timedelta(days=365)
         if value > max_date:
             raise ValueError("Date cannot be more than one year in the future.")
         return value
@@ -79,7 +79,7 @@ class MovieUpdate(BaseModel):
     def validate_date(cls, value):
         if value is None:
             return value
-        max_date = date(date.today().year + 1, 12, 31)
+        max_date = date.today() + timedelta(days=365)
         if value > max_date:
             raise ValueError("Date cannot be more than one year in the future.")
         return value
@@ -96,7 +96,7 @@ class MovieListItem(BaseModel):
 
     @field_validator("date")
     def validate_date(cls, value):
-        max_date = date(date.today().year + 1, 12, 31)
+        max_date = date.today() + timedelta(days=365)
         if value > max_date:
             raise ValueError("Date cannot be more than one year in the future.")
         return value
@@ -130,7 +130,7 @@ class MovieOut(BaseModel):
 
     @field_validator("date")
     def validate_date(cls, value):
-        max_date = date(date.today().year + 1, 12, 31)
+        max_date = date.today() + timedelta(days=365)
         if value > max_date:
             raise ValueError("Date cannot be more than one year in the future.")
         return value

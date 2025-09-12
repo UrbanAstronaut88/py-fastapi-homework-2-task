@@ -1,5 +1,4 @@
 from datetime import timedelta, date
-from decimal import Decimal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Response, Path
 from sqlalchemy import select, func
@@ -117,8 +116,8 @@ async def create_movie(movie_in: MovieCreate, db: AsyncSession = Depends(get_db)
         score=movie_in.score,
         overview=movie_in.overview,
         status=movie_in.status,
-        budget=Decimal(str(movie_in.budget)),
-        revenue=Decimal(str(movie_in.revenue)),
+        budget=float(movie_in.budget),
+        revenue=float(movie_in.revenue),
         country=country,
         genres=genres,
         actors=actors,
@@ -217,12 +216,12 @@ async def update_movie(
     if movie_in.budget is not None:
         if movie_in.budget < 0:
             raise HTTPException(status_code=400, detail="Invalid input data.")
-        movie.budget = Decimal(str(movie_in.budget))
+        movie.budget = float(movie_in.budget)
 
     if movie_in.revenue is not None:
         if movie_in.revenue < 0:
             raise HTTPException(status_code=400, detail="Invalid input data.")
-        movie.revenue = Decimal(str(movie_in.revenue))
+        movie.revenue = float(movie_in.revenue)
 
     db.add(movie)
     await db.commit()
