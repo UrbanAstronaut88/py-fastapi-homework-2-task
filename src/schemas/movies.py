@@ -143,7 +143,7 @@ class MovieDetailSchema(MovieOut):
 
 
 MovieListResponseSchema = MovieListResponse
-MovieDetailSchema = MovieOut
+#MovieDetailSchema = MovieOut
 
 MovieCreateSchema = MovieCreate
 MovieUpdateSchema = MovieUpdate
