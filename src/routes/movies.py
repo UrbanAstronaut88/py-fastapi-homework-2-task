@@ -7,7 +7,7 @@ from sqlalchemy.orm import joinedload
 
 from src.database import get_db
 from src.database.models import CountryModel, GenreModel, ActorModel, LanguageModel, MovieModel
-from src.schemas.movies import MovieListResponse, MovieCreate, MovieOut, MovieUpdate, MovieListItem, MovieDetailSchema
+from src.schemas.movies import MovieListResponseSchema, MovieCreateSchema, MovieOut, MovieUpdateSchema, MovieListItemSchema, MovieDetailSchema
 
 router = APIRouter()
 
@@ -33,7 +33,7 @@ async def get_or_create_by_name(db: AsyncSession, model, name: str):
     return obj
 
 
-@router.get("/movies/", response_model=MovieListResponse)
+@router.get("/movies/", response_model=MovieListResponseSchema)
 async def get_movies(
     page: int = Query(1, ge=1),
     per_page: int = Query(10, ge=1, le=20),
@@ -59,7 +59,7 @@ async def get_movies(
     movies = result.scalars().unique().all()
 
     movies_items = [
-        MovieListItem(
+        MovieListItemSchema(
             id=m.id,
             name=m.name,
             date=m.date,
@@ -73,7 +73,7 @@ async def get_movies(
     prev_page = f"{base_url}?page={page - 1}&per_page={per_page}" if page > 1 else None
     next_page = f"{base_url}?page={page + 1}&per_page={per_page}" if page < total_pages else None
 
-    return MovieListResponse(
+    return MovieListResponseSchema(
         movies=movies_items,
         prev_page=prev_page,
         next_page=next_page,
@@ -83,7 +83,7 @@ async def get_movies(
 
 
 @router.post("/movies/", response_model=MovieOut, status_code=201)
-async def create_movie(movie_in: MovieCreate, db: AsyncSession = Depends(get_db)):
+async def create_movie(movie_in: MovieCreateSchema, db: AsyncSession = Depends(get_db)):
     if movie_in.date > date.today() + timedelta(days=365):
         raise HTTPException(status_code=400, detail="Invalid input data.")
 
@@ -185,7 +185,7 @@ async def delete_movie(movie_id: int, db: AsyncSession = Depends(get_db)):
 @router.patch("/movies/{movie_id}/")
 async def update_movie(
         movie_id: int,
-        movie_in: MovieUpdate,
+        movie_in: MovieUpdateSchema,
         db: AsyncSession = Depends(get_db),
 ):
     result = await db.execute(select(MovieModel).where(MovieModel.id == movie_id))

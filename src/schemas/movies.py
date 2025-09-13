@@ -4,7 +4,7 @@ from pydantic import BaseModel, Field, ConfigDict, field_validator
 from src.database.models import MovieStatusEnum
 
 
-class CountryOut(BaseModel):
+class CountrySchema(BaseModel):
     id: int
     code: str
     name: Optional[str]
@@ -12,21 +12,21 @@ class CountryOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class GenreOut(BaseModel):
+class GenreSchema(BaseModel):
     id: int
     name: str
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class ActorOut(BaseModel):
+class ActorSchema(BaseModel):
     id: int
     name: str
 
     model_config = ConfigDict(from_attributes=True)
 
 
-class LanguageOut(BaseModel):
+class LanguageSchema(BaseModel):
     id: int
     name: str
 
@@ -58,11 +58,11 @@ class MovieBase(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class MovieCreate(MovieBase):
+class MovieCreateSchema(MovieBase):
     pass
 
 
-class MovieUpdate(BaseModel):
+class MovieUpdateSchema(BaseModel):
     name: Optional[str] = Field(None, max_length=255)
     date: Optional[date] = None
     score: Optional[float] = Field(None, ge=0, le=100)
@@ -87,7 +87,7 @@ class MovieUpdate(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class MovieListItem(BaseModel):
+class MovieListItemSchema(BaseModel):
     id: int
     name: str = Field(..., max_length=255)
     date: date
@@ -104,8 +104,8 @@ class MovieListItem(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
 
-class MovieListResponse(BaseModel):
-    movies: List[MovieListItem]
+class MovieListResponseSchema(BaseModel):
+    movies: List[MovieListItemSchema]
     prev_page: Optional[str]
     next_page: Optional[str]
     total_pages: int
@@ -123,10 +123,10 @@ class MovieOut(BaseModel):
     status: MovieStatusEnum
     budget: float = Field(..., ge=0)
     revenue: float = Field(..., ge=0)
-    country: CountryOut
-    genres: List[GenreOut]
-    actors: List[ActorOut]
-    languages: List[LanguageOut]
+    country: CountrySchema
+    genres: List[GenreSchema]
+    actors: List[ActorSchema]
+    languages: List[LanguageSchema]
 
     @field_validator("date")
     def validate_date(cls, value):
@@ -142,11 +142,7 @@ class MovieDetailSchema(MovieOut):
     pass
 
 
-MovieListResponseSchema = MovieListResponse
-MovieCreateSchema = MovieCreate
-MovieUpdateSchema = MovieUpdate
-MovieListItemSchema = MovieListItem
-CountrySchema = CountryOut
-GenreSchema = GenreOut
-ActorSchema = ActorOut
-LanguageSchema = LanguageOut
+
+
+
+
