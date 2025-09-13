@@ -140,9 +140,3 @@ class MovieOut(BaseModel):
 
 class MovieDetailSchema(MovieOut):
     pass
-
-
-
-
-
-

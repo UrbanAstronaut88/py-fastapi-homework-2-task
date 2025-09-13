@@ -7,7 +7,13 @@ from sqlalchemy.orm import joinedload
 
 from src.database import get_db
 from src.database.models import CountryModel, GenreModel, ActorModel, LanguageModel, MovieModel
-from src.schemas.movies import MovieListResponseSchema, MovieCreateSchema, MovieOut, MovieUpdateSchema, MovieListItemSchema, MovieDetailSchema
+from src.schemas.movies import (MovieListResponseSchema,
+                                MovieCreateSchema,
+                                MovieOut,
+                                MovieUpdateSchema,
+                                MovieListItemSchema,
+                                MovieDetailSchema
+                                )
 
 router = APIRouter()
 
